@@ -1,6 +1,5 @@
 using Autofac;
 using Autofac.Integration.Mvc;
-using AutoMapper;
 using LearningManagementSystem.App_Start;
 using LearningManagementSystem.Models;
 using LearningManagementSystem.Repositories.Courses;
@@ -19,12 +18,10 @@ namespace LearningManagementSystem
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-
             // Dependency Injection
             var builder = new ContainerBuilder();
 
             //Register AutoMapper here using AutoFacModule class (Both methods works)
-            //builder.RegisterModule(new AutoMapperModule());
             builder.RegisterModule<AutofacModule>();
 
             // Register your MVC controllers. (MvcApplication is the name of the class in Global.asax.)
@@ -52,6 +49,5 @@ namespace LearningManagementSystem
             var container = builder.Build();
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
         }
-
     }
 }

@@ -1,0 +1,30 @@
+﻿@model IList<LearningManagementSystem.Repositories.Courses.CourseDto>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+<div class="table-responsive">
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Course</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var i in Model)
+            {
+                <tr>
+                    <th scope="row">#</th>
+                    <td>@i.Title</td>
+                    <td>
+                        <a href="@Url.Action("Edit", "Courses", new { i.Id })">Edit</a> / <a href="@Url.Action("Delete", "Courses", new { i.Id })">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
