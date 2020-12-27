@@ -208,6 +208,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CoursesController.cs" />
+    <Compile Include="Controllers\EmployeesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\StudentsController.cs" />
@@ -231,10 +232,16 @@
     <Compile Include="Migrations\202012270307230_AddStudentModel.Designer.cs">
       <DependentUpon>202012270307230_AddStudentModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202012270539338_AddEmployeeModule.cs" />
+    <Compile Include="Migrations\202012270539338_AddEmployeeModule.Designer.cs">
+      <DependentUpon>202012270539338_AddEmployeeModule.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
     <Compile Include="Models\Course.cs" />
+    <Compile Include="Models\Employee.cs" />
+    <Compile Include="Models\Enums\Designation.cs" />
     <Compile Include="Models\Enums\Gender.cs" />
     <Compile Include="Models\Enums\Semester.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -245,6 +252,10 @@
     <Compile Include="Repositories\Courses\CourseRepository.cs" />
     <Compile Include="Repositories\Courses\Dtos\CourseDto.cs" />
     <Compile Include="Repositories\Courses\ICourseRepository.cs" />
+    <Compile Include="Repositories\Employees\Dtos\CreateEmployeeDto.cs" />
+    <Compile Include="Repositories\Employees\Dtos\EmployeeDto.cs" />
+    <Compile Include="Repositories\Employees\EmployeeRepository.cs" />
+    <Compile Include="Repositories\Employees\IEmployeeRepository.cs" />
     <Compile Include="Repositories\Students\Dtos\StudentDto.cs" />
     <Compile Include="Repositories\Students\IStudentRepository.cs" />
     <Compile Include="Repositories\Students\StudentRepository.cs" />
@@ -319,6 +330,9 @@
     <Content Include="Views\Students\Index.cshtml" />
     <Content Include="Views\Students\Register.cshtml" />
     <Content Include="Views\Students\Edit.cshtml" />
+    <Content Include="Views\Employees\Index.cshtml" />
+    <Content Include="Views\Employees\Register.cshtml" />
+    <Content Include="Views\Employees\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -348,6 +362,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202012270307230_AddStudentModel.resx">
       <DependentUpon>202012270307230_AddStudentModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202012270539338_AddEmployeeModule.resx">
+      <DependentUpon>202012270539338_AddEmployeeModule.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using LearningManagementSystem.Models;
 using LearningManagementSystem.Repositories.Courses;
+using LearningManagementSystem.Repositories.Employees.Dtos;
 using LearningManagementSystem.Repositories.Students.Dtos;
 using LearningManagementSystem.Repositories.Subjects.Dtos;
 
@@ -26,8 +27,13 @@ namespace LearningManagementSystem.App_Start
             
             CreateMap<Student, StudentDto>();
 
+            // Employee
+            CreateMap<CreateEmployeeDto, Employee>();
 
-                
+            CreateMap<Employee, EmployeeDto>();
+
+            CreateMap<EmployeeDto, Employee>();
+
         }
     }
 }

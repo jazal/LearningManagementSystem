@@ -10,6 +10,8 @@ namespace LearningManagementSystem.Models
         public DbSet<Subject> Subjects { get; set; }
         
         public DbSet<Student> Students { get; set; }
+        
+        public DbSet<Employee> Employees{ get; set; }
 
         public ApplicationDbContext()
             : base("Default", throwIfV1Schema: false)

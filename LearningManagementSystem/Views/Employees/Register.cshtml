@@ -1,0 +1,148 @@
+﻿@using LearningManagementSystem.Models.Enums
+@{
+    ViewBag.Title = "Employee";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm("Register", "Employees", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <h4>Create a new Employee.</h4>
+    <hr />
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+
+    <div class="form-group">
+        <label for="FirstName" class="col-md-2 control-label">FirstName</label>
+        <div class="col-md-10">
+            <input type="text" name="FirstName" id="FirstName" class="form-control" required />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="LastName" class="col-md-2 control-label">LastName</label>
+        <div class="col-md-10">
+            <input type="text" name="LastName" id="LastName" class="form-control" required />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="DateOfBirth" class="col-md-2 control-label">DateOfBirth</label>
+        <div class="col-md-10">
+            <input type="date" name="DateOfBirth" id="DateOfBirth" class="form-control" required />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="ContactNo" class="col-md-2 control-label">ContactNo</label>
+        <div class="col-md-10">
+            <input type="text" name="ContactNo" id="ContactNo" class="form-control" required />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="Gender" class="col-md-2 control-label">Gender</label>
+        <div class="col-md-10">
+            <select name="Gender" id="Gender" class="form-control" required>
+                <option value=""></option>
+                @foreach (var item in Enum.GetValues(typeof(Gender)))
+                {
+                    <option value="@((byte)item)">@(item.ToString())</option>
+                }
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="Designation" class="col-md-2 control-label">Designation</label>
+        <div class="col-md-10">
+            <select name="Designation" id="Designation" class="form-control" required>
+                <option value=""></option>
+                @foreach (var item in Enum.GetValues(typeof(Designation)))
+                {
+                    <option value="@((byte)item)">@(item.ToString())</option>
+                }
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="Email" class="col-md-2 control-label">Email</label>
+        <div class="col-md-10">
+            <input type="email" name="Email" id="Email" class="form-control" required />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="Password" class="col-md-2 control-label">Password</label>
+        <div class="col-md-10">
+            <input type="text" name="Password" id="Password" class="form-control" required />
+        </div>
+    </div>
+
+    
+    <div class="form-group" id="divCourses">
+        <div class="col-md-offset-2 col-md-10">
+            <p class="text-primary"><strong class="text-danger">*</strong> Course is required when you select <strong>Course Coordinator</strong> as a <strong>Designation</strong></p>
+        </div>
+        <label for="Courses" class="col-md-2 control-label">Course</label>
+        <div class="col-md-10">
+            <select class="form-control" name="CourseId" id="Courses">
+                <option value=""></option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" class="btn btn-primary" value="Create" />
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<script type="text/javascript">
+    window.onload = function () {
+        if (window.jQuery) {
+
+            var ddlCourses = $('#Courses');
+            ddlCourses.empty();
+            $.ajax({
+                type: "GET",
+                url: "/Employees/GetAllCourses",
+                data: {},
+                contentType: "application/json",
+                dataType: "json",
+                success: function (response) {
+                    ddlCourses.append('<option value=""></option>');
+                    $.each(response.courseDtos, function (i, item) {
+                        ddlCourses.append('<option value="' + item.Id + '">' + item.Title + '</option>');
+                    });
+                },
+                error: function (xhr, status, error) {
+                    alert("Result: " + status + " " + error + " " + xhr.status + " " + xhr.statusText)
+                }
+            });
+
+
+            var divCourses = $('#divCourses');
+            divCourses.hide();
+            $('#Designation').on('change', function () {
+                // When you select CourseCoordinator as a designation => 2 
+                if ($('#Designation').val() == "2") {
+                    divCourses.show();
+                } else {
+                    divCourses.hide();
+                }
+            });
+
+        } else {
+            alert("jQuery is not loaded");
+        }
+    }
+</script>
+
