@@ -1,0 +1,35 @@
+﻿@model IList<LearningManagementSystem.Repositories.Subjects.Dtos.SubjectDto>
+@{
+    ViewBag.Title = "Subjects";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+<a href="@Url.Action("Register", "Subjects")" class="btn btn-primary">Register</a>
+<div class="table-responsive">
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Subject</th>
+                <th scope="col">Semester</th>
+                <th scope="col">Course</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var subject in Model)
+            {
+                <tr>
+                    <th scope="row">#</th>
+                    <td>@subject.Title</td>
+                    <td>@subject.Semester.ToString()</td>
+                    <td>@subject.CourseTitle</td>
+                    <td>
+                        <a href="@Url.Action("Edit", "Subjects", new { subject.Id })">Edit</a> / <a href="@Url.Action("Delete", "Subjects", new { subject.Id })">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

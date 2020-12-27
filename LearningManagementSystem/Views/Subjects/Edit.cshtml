@@ -1,0 +1,101 @@
+﻿@using LearningManagementSystem.Models.Enums
+@model LearningManagementSystem.Repositories.Subjects.Dtos.SubjectDto
+@{
+    ViewBag.Title = "Subject";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title.</h2>
+
+@using (Html.BeginForm("Edit", "Subjects", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <h4>Edit Subject.</h4>
+    <hr />
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+    <input type="hidden" name="Id" value="@Model.Id" />
+    <input type="hidden" name="SelectedCourseId" id="SelectedCourseId" value="@Model.CourseId" />
+
+    <div class="form-group">
+        <label for="Title" class="col-md-2 control-label">Title</label>
+        <div class="col-md-10">
+            <input type="text" name="Title" id="Title" value="@Model.Title" class="form-control" required/>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="Semester" class="col-md-2 control-label">Semester</label>
+        <div class="col-md-10">
+            <select class="form-control" name="Semester" id="Semester" required>
+                @foreach (var item in Enum.GetValues(typeof(Semester)))
+                {
+                    if (item.ToString() == Model.Semester.ToString())
+                    {
+                        <option value="@((byte)item)" selected>@(item.ToString())</option>
+                    }
+                    else
+                    {
+                        <option value="@((byte)item)">@(item.ToString())</option>
+                    }
+                }
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="Courses" class="col-md-2 control-label">Courses</label>
+        <div class="col-md-10">
+            <select class="form-control" name="CourseId" id="Courses" required>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" class="btn btn-default" value="Update" />
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<script type="text/javascript">
+    window.onload = function () {
+        if (window.jQuery) {
+
+            var ddlCourses = $('#Courses');
+
+            ddlCourses.empty();
+            $.ajax({
+                type: "GET",
+                url: "/Subjects/GetAllCourses",
+                data: {},
+                contentType: "application/json",
+                dataType: "json",
+                success: function (response) {
+                    
+                    $.each(response.courseDtos, function (i, item) {
+                        var selectedCourseId = $('#SelectedCourseId').val();
+                        if (item.Id == parseInt(selectedCourseId)) {
+                            ddlCourses.append('<option value="' + item.Id + '" selected>' + item.Title + '</option>');
+                        } else {
+                            ddlCourses.append('<option value="' + item.Id + '">' + item.Title + '</option>');
+                        }
+
+                        
+                    });
+                },
+                error: function (xhr, status, error) {
+                    alert("Result: " + status + " " + error + " " + xhr.status + " " + xhr.statusText)
+                }
+            });
+
+        } else {
+            alert("jQuery is not loaded");
+        }
+    }
+</script>
+
+

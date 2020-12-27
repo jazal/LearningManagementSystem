@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace LearningManagementSystem.Models
 {
@@ -10,5 +12,12 @@ namespace LearningManagementSystem.Models
         [Required]
         [StringLength(100)]
         public string Title { get; set; }
+
+        public ICollection<Subject> Subjects { get; set; }
+
+        public Course()
+        {
+            Subjects = new Collection<Subject>();
+        }
     }
 }

@@ -210,6 +210,7 @@
     <Compile Include="Controllers\CoursesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\SubjectsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -221,16 +222,25 @@
     <Compile Include="Migrations\202012261222114_AddCourseModel.Designer.cs">
       <DependentUpon>202012261222114_AddCourseModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202012261619570_AddSubjectModel.cs" />
+    <Compile Include="Migrations\202012261619570_AddSubjectModel.Designer.cs">
+      <DependentUpon>202012261619570_AddSubjectModel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
     <Compile Include="Models\Course.cs" />
+    <Compile Include="Models\Enums\Semester.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Subject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\Courses\CourseRepository.cs" />
     <Compile Include="Repositories\Courses\Dtos\CourseDto.cs" />
     <Compile Include="Repositories\Courses\ICourseRepository.cs" />
+    <Compile Include="Repositories\Subjects\Dtos\SubjectDto.cs" />
+    <Compile Include="Repositories\Subjects\ISubjectRepository.cs" />
+    <Compile Include="Repositories\Subjects\SubjectRepository.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -292,6 +302,9 @@
     <Content Include="Views\Courses\Register.cshtml" />
     <Content Include="Views\Courses\Index.cshtml" />
     <Content Include="Views\Courses\Edit.cshtml" />
+    <Content Include="Views\Subjects\Index.cshtml" />
+    <Content Include="Views\Subjects\Register.cshtml" />
+    <Content Include="Views\Subjects\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -315,6 +328,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202012261222114_AddCourseModel.resx">
       <DependentUpon>202012261222114_AddCourseModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202012261619570_AddSubjectModel.resx">
+      <DependentUpon>202012261619570_AddSubjectModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

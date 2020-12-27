@@ -1,0 +1,61 @@
+﻿@using LearningManagementSystem.Models.Enums
+@model  IEnumerable<LearningManagementSystem.Repositories.Courses.CourseDto>
+@{
+    ViewBag.Title = "Subject";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title.</h2>
+
+@using (Html.BeginForm("Register", "Subjects", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <h4>Create a new subject.</h4>
+    <hr />
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+    
+    <div class="form-group">
+        <label for="Title" class="col-md-2 control-label">Title</label>
+        <div class="col-md-10">
+            <input type="text" name="Title" id="Title" class="form-control" required />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="Semester" class="col-md-2 control-label">Semester</label>
+        <div class="col-md-10">
+            <select name="Semester" id="Semester" class="form-control" required>
+                <option value=""></option>
+                @foreach (var item in Enum.GetValues(typeof(Semester)))
+                {
+                    <option value="@((byte)item)">@(item.ToString())</option>
+                }
+            </select>
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <label for="CourseId" class="col-md-2 control-label">Course</label>
+        <div class="col-md-10">
+            <select class="form-control" name="CourseId" id="CourseId" required>
+                <option value=""></option>
+                @foreach (var course in Model)
+                {
+                    <option value="@course.Id">@course.Title</option>
+                }
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" class="btn btn-default" value="Create" />
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
