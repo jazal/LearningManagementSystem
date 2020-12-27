@@ -236,6 +236,14 @@
     <Compile Include="Migrations\202012270539338_AddEmployeeModule.Designer.cs">
       <DependentUpon>202012270539338_AddEmployeeModule.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202012271308088_AddUserInStudentModel.cs" />
+    <Compile Include="Migrations\202012271308088_AddUserInStudentModel.Designer.cs">
+      <DependentUpon>202012271308088_AddUserInStudentModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202012271434299_AddIsStudentInUserModel.cs" />
+    <Compile Include="Migrations\202012271434299_AddIsStudentInUserModel.Designer.cs">
+      <DependentUpon>202012271434299_AddIsStudentInUserModel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
@@ -365,6 +373,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202012270539338_AddEmployeeModule.resx">
       <DependentUpon>202012270539338_AddEmployeeModule.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202012271308088_AddUserInStudentModel.resx">
+      <DependentUpon>202012271308088_AddUserInStudentModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202012271434299_AddIsStudentInUserModel.resx">
+      <DependentUpon>202012271434299_AddIsStudentInUserModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

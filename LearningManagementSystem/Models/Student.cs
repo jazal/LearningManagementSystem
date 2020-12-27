@@ -45,5 +45,10 @@ namespace LearningManagementSystem.Models
         public Course Course { get; set; }
 
         public DateTime EnrolledDate { get; set; }
+
+        public string ApplicationUserId { get; set; }
+
+        public ApplicationUser ApplicationUser { get; set; }
+
     }
 }
