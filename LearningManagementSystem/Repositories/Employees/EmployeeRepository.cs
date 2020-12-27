@@ -71,13 +71,13 @@ namespace LearningManagementSystem.Repositories.Employees
             if (existingEmployee != null)
             {
                 // Only Course Coordinator has the permission to have 1 CourseId
-                if (existingEmployee.Designation == Designation.CourseCoordinator)
+                if (updatedValues.Designation == Designation.CourseCoordinator)
                 {
-                    existingEmployee.CourseId = existingEmployee.CourseId;
+                    updatedValues.CourseId = updatedValues.CourseId;
                 }
                 else
                 {
-                    existingEmployee.CourseId = null;
+                    updatedValues.CourseId = null;
                 }
 
                 existingEmployee.FirstName = updatedValues.FirstName;

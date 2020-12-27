@@ -134,8 +134,10 @@
             $('#Designation').on('change', function () {
                 // When you select CourseCoordinator as a designation => 2 
                 if ($('#Designation').val() == "2") {
+                    $('#Courses').prop('required', true);
                     divCourses.show();
                 } else {
+                    $('#Courses').prop('required', false);
                     divCourses.hide();
                 }
             });
