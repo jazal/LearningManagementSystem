@@ -1,4 +1,5 @@
-﻿@model IList<LearningManagementSystem.Repositories.Employees.Dtos.EmployeeDto>
+﻿@using LearningManagementSystem.Models.Enums
+@model IList<LearningManagementSystem.Repositories.Employees.Dtos.EmployeeDto>
 @{
     ViewBag.Title = "Employees";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -13,10 +14,10 @@
                 <th scope="row">#</th>
                 <th scope="col">Full Name</th>
                 <th scope="col">Gender</th>
-                <th scope="col">Contact No</th>
                 <th scope="col">Designation</th>
                 <th scope="col">Email</th>
-                <th scope="col">Action</th>
+                <th scope="col">Attachments</th>
+                <th scope="col">Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -26,9 +27,14 @@
                     <th scope="row"></th>
                     <td>@string.Format("{0} {1}", employee.FirstName, employee.LastName)</td>
                     <td>@employee.Gender.ToString()</td>
-                    <td>@employee.ContactNo</td>
                     <td>@employee.Designation.ToString()</td>
                     <td>@employee.Email</td>
+                    <td>
+                        @if (employee.Designation == Designation.CourseCoordinator)
+                        {
+                            <a href="@Url.Action("Index", "Attachments", new { employeeId = employee.Id })">Attachments</a>
+                        }
+                    </td>
                     <td>
                         <a href="@Url.Action("Edit", "Employees", new { employee.Id })">Edit</a> / <a href="@Url.Action("Delete", "Employees", new { employee.Id })">Delete</a>
                     </td>
