@@ -2,9 +2,11 @@
 using LearningManagementSystem.Models;
 using LearningManagementSystem.Models.Enums;
 using LearningManagementSystem.Repositories.Employees.Dtos;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Web.Helpers;
 
 namespace LearningManagementSystem.Repositories.Employees
 {
@@ -33,6 +35,17 @@ namespace LearningManagementSystem.Repositories.Employees
                 employee.CourseId = null;
             }
 
+            employee.ApplicationUser = new ApplicationUser
+            {
+                UserName = input.Email,
+                Email = input.Email,
+                PasswordHash = Crypto.HashPassword(input.Password),
+                SecurityStamp = Guid.NewGuid().ToString("D"),
+                LockoutEnabled = true,
+                IsStudent = false,
+                Designation = input.Designation
+            };
+
             var createdEmployee = _context.Employees.Add(employee);
             _context.SaveChanges();
 
@@ -41,9 +54,10 @@ namespace LearningManagementSystem.Repositories.Employees
 
         public bool Delete(int id)
         {
-            var employeeToDelete = _context.Employees.FirstOrDefault(e => e.Id == id);
+            var employeeToDelete = _context.Employees.Include(e => e.ApplicationUser).FirstOrDefault(e => e.Id == id);
             if (employeeToDelete != null)
             {
+                _context.Users.Remove(employeeToDelete.ApplicationUser);
                 _context.Employees.Remove(employeeToDelete);
                 _context.SaveChanges();
                 return true;
@@ -53,7 +67,7 @@ namespace LearningManagementSystem.Repositories.Employees
 
         public EmployeeDto Edit(int id, EmployeeDto updatedValues)
         {
-            var existingEmployee = _context.Employees.FirstOrDefault(c => c.Id == id);
+            var existingEmployee = _context.Employees.Include(s => s.ApplicationUser).FirstOrDefault(c => c.Id == id);
             if (existingEmployee != null)
             {
                 // Only Course Coordinator has the permission to have 1 CourseId
@@ -66,7 +80,6 @@ namespace LearningManagementSystem.Repositories.Employees
                     existingEmployee.CourseId = null;
                 }
 
-
                 existingEmployee.FirstName = updatedValues.FirstName;
                 existingEmployee.LastName = updatedValues.LastName;
                 existingEmployee.DateOfBirth = updatedValues.DateOfBirth;
@@ -76,6 +89,16 @@ namespace LearningManagementSystem.Repositories.Employees
                 existingEmployee.Email = updatedValues.Email;
                 existingEmployee.Password = updatedValues.Password;
                 existingEmployee.CourseId = updatedValues.CourseId;
+
+                var existingUser = existingEmployee.ApplicationUser;
+                existingUser.UserName = updatedValues.Email;
+                existingUser.Email = updatedValues.Email;
+                existingUser.PasswordHash = Crypto.HashPassword(updatedValues.Password);
+                existingUser.SecurityStamp = Guid.NewGuid().ToString("D");
+                existingUser.LockoutEnabled = true;
+                existingUser.IsStudent = false;
+                existingUser.Designation = updatedValues.Designation;
+
                 _context.SaveChanges();
                 return _mapper.Map<Employee, EmployeeDto>(existingEmployee);
             }

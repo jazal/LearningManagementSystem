@@ -41,5 +41,9 @@ namespace LearningManagementSystem.Models
         public int? CourseId { get; set; } // Only applicable for Designation = CourseCoordinator
 
         public Course Course { get; set; }
+
+        public string ApplicationUserId { get; set; }
+
+        public ApplicationUser ApplicationUser { get; set; }
     }
 }
