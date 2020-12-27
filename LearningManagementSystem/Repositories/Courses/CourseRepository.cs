@@ -1,5 +1,6 @@
 ﻿using LearningManagementSystem.Models;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 
 namespace LearningManagementSystem.Repositories.Courses
@@ -51,7 +52,7 @@ namespace LearningManagementSystem.Repositories.Courses
 
         public Course GetById(int id)
         {
-            return _context.Courses.FirstOrDefault(c => c.Id == id);
+            return _context.Courses.Include(c => c.Subjects).FirstOrDefault(c => c.Id == id);
         }
     }
 }
