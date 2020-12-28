@@ -1,8 +1,6 @@
 ﻿using LearningManagementSystem.Models;
-using System;
+using LearningManagementSystem.Repositories.Subjects.Dtos;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace LearningManagementSystem.Repositories.Subjects
 {
@@ -17,5 +15,7 @@ namespace LearningManagementSystem.Repositories.Subjects
         bool Delete(int id);
 
         Subject Edit(int id, Subject subject);
+
+        List<SubjectDto> GetSubjectsByCourseId(int courseId);
     }
 }

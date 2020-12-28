@@ -11,7 +11,9 @@ namespace LearningManagementSystem.Models
         
         public DbSet<Student> Students { get; set; }
         
-        public DbSet<Employee> Employees{ get; set; }
+        public DbSet<Employee> Employees { get; set; }
+        
+        public DbSet<Attachment> Attachments { get; set; }
 
         public ApplicationDbContext()
             : base("Default", throwIfV1Schema: false)

@@ -207,6 +207,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AttachmentsController.cs" />
     <Compile Include="Controllers\CoursesController.cs" />
     <Compile Include="Controllers\EmployeesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -248,11 +249,22 @@
     <Compile Include="Migrations\202012271449189_AddCoulumnsToUserAndEmployeeModels.Designer.cs">
       <DependentUpon>202012271449189_AddCoulumnsToUserAndEmployeeModels.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202012271655485_AddAttachmentModel.cs" />
+    <Compile Include="Migrations\202012271655485_AddAttachmentModel.Designer.cs">
+      <DependentUpon>202012271655485_AddAttachmentModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202012281402145_AddAttachmentFileNameColumnInAttachmentModel.cs" />
+    <Compile Include="Migrations\202012281402145_AddAttachmentFileNameColumnInAttachmentModel.Designer.cs">
+      <DependentUpon>202012281402145_AddAttachmentFileNameColumnInAttachmentModel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
+    <Compile Include="Models\Attachment.cs" />
     <Compile Include="Models\Course.cs" />
     <Compile Include="Models\Employee.cs" />
+    <Compile Include="Models\Enums\AttachmentStatus.cs" />
+    <Compile Include="Models\Enums\AttachmentType.cs" />
     <Compile Include="Models\Enums\Designation.cs" />
     <Compile Include="Models\Enums\Gender.cs" />
     <Compile Include="Models\Enums\Semester.cs" />
@@ -261,6 +273,10 @@
     <Compile Include="Models\Student.cs" />
     <Compile Include="Models\Subject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\Attachments\AttachmentRepository.cs" />
+    <Compile Include="Repositories\Attachments\Dtos\AttachmentDto.cs" />
+    <Compile Include="Repositories\Attachments\Dtos\CreateAttachmentDto.cs" />
+    <Compile Include="Repositories\Attachments\IAttachmentRepository.cs" />
     <Compile Include="Repositories\Courses\CourseRepository.cs" />
     <Compile Include="Repositories\Courses\Dtos\CourseDto.cs" />
     <Compile Include="Repositories\Courses\ICourseRepository.cs" />
@@ -345,6 +361,9 @@
     <Content Include="Views\Employees\Index.cshtml" />
     <Content Include="Views\Employees\Register.cshtml" />
     <Content Include="Views\Employees\Edit.cshtml" />
+    <Content Include="Views\Attachments\Index.cshtml" />
+    <Content Include="Views\Attachments\Register.cshtml" />
+    <Content Include="Views\Attachments\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -386,6 +405,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202012271449189_AddCoulumnsToUserAndEmployeeModels.resx">
       <DependentUpon>202012271449189_AddCoulumnsToUserAndEmployeeModels.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202012271655485_AddAttachmentModel.resx">
+      <DependentUpon>202012271655485_AddAttachmentModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202012281402145_AddAttachmentFileNameColumnInAttachmentModel.resx">
+      <DependentUpon>202012281402145_AddAttachmentFileNameColumnInAttachmentModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

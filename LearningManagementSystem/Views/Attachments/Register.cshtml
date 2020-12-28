@@ -1,0 +1,132 @@
+﻿@using LearningManagementSystem.Models.Enums
+@{
+    ViewBag.Title = "Attachments";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm("Register", "Attachments", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <h4>Create a new attachment.</h4>
+    <hr />
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+    <input type="hidden" name="EmployeeId" id="EmployeeId" value="@Request.QueryString["employeeId"]" />
+    <input type="hidden" name="courseId" id="courseId" value="@Request.QueryString["courseId"]" />
+
+    <div class="form-group">
+        <label for="Subjects" class="col-md-2 control-label">Subjects</label>
+        <div class="col-md-10">
+            <select class="form-control" name="SubjectId" id="Subjects" required>
+                <option value=""></option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="Title" class="col-md-2 control-label">Title</label>
+        <div class="col-md-10">
+            <input type="text" name="Title" id="Title" class="form-control" required />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="AttachmentType" class="col-md-2 control-label">Attachment Type</label>
+        <div class="col-md-10">
+            <select name="AttachmentType" id="AttachmentType" class="form-control" required>
+                <option value=""></option>
+                @foreach (var item in Enum.GetValues(typeof(AttachmentType)))
+                {
+                    <option value="@((byte)item)">@(item.ToString())</option>
+                }
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="DueDate" class="col-md-2 control-label">Due Date</label>
+        <div class="col-md-10">
+            <input type="date" name="DueDate" id="DueDate" class="form-control" required />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="Status" class="col-md-2 control-label">Status</label>
+        <div class="col-md-10">
+            <select name="Status" id="Status" class="form-control" required>
+                <option value=""></option>
+                @foreach (var item in Enum.GetValues(typeof(AttachmentStatus)))
+                {
+                    <option value="@((byte)item)">@(item.ToString())</option>
+                }
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-md-2 control-label">File</label>
+        <div class="col-md-10">
+            <input type="file" class="form-control" name="newFile" id="newFile">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" class="btn btn-primary" value="Create" />
+        </div>
+    </div>
+
+
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<script type="text/javascript">
+    window.onload = function () {
+        if (window.jQuery) {
+
+            var ddlSubjects = $('#Subjects');
+
+            // Reading from query parameter => Base method is in main.js
+            var courseId = getUrlVars()["courseId"];
+            courseId = this.parseInt(courseId);
+
+            ddlSubjects.empty();
+            $.ajax({
+                type: "GET",
+                url: "/Attachments/GetSubjectsByCourseId",
+                data: { courseId: courseId },
+                contentType: "application/json",
+                dataType: "json",
+                success: function (response) {
+                    ddlSubjects.append('<option value=""></option>');
+                    $.each(response.subjectDtos, function (i, item) {
+                        ddlSubjects.append('<option value="' + item.Id + '">' + item.Title + '</option>');
+                    });
+                },
+                error: function (xhr, status, error) {
+                    alert("Invalid Course! Please reload the page");
+                }
+            });
+
+            // A method to access query parameter
+            function getUrlVars() {
+                var vars = [], hash;
+                var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+                for (var i = 0; i < hashes.length; i++) {
+                    hash = hashes[i].split('=');
+                    vars.push(hash[0]);
+                    vars[hash[0]] = hash[1];
+                }
+                return vars;
+            }
+
+        } else {
+            alert("jQuery is not loaded");
+        }
+    }
+</script>
+

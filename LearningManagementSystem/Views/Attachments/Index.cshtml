@@ -1,0 +1,46 @@
+﻿@using System.Web;
+@model IEnumerable<LearningManagementSystem.Repositories.Attachments.Dtos.AttachmentDto>
+@{
+    ViewBag.Title = "Attachments";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+@{
+    var employeeId = Request.QueryString["employeeId"];
+    var courseId = Request.QueryString["courseId"];
+}
+<a href="@Url.Action("Register", "Attachments", new { employeeId = employeeId, courseId = courseId })" class="btn btn-primary">Create</a>
+
+<div class="table-responsive">
+    <table class="table">
+        <thead class="thead-dark alert-info">
+            <tr>
+                <th scope="row">#</th>
+                <th scope="col">Subject</th>
+                <th scope="col">Attachment Title</th>
+                <th scope="col">Type</th>
+                <th scope="col">DueDate</th>
+                <th scope="col">Status</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var attchment in Model)
+            {
+                <tr>
+                    <th scope="row"></th>
+                    <td>@attchment.Subject.Title</td>
+                    <td>@attchment.Title</td>
+                    <td>@attchment.AttachmentType.ToString()</td>
+                    <td>@attchment.DueDate</td>
+                    <td>@attchment.Status.ToString()</td>
+                    <td>
+                        <a href="@Url.Action("Edit", "Attachments", new { employeeId = employeeId, courseId = courseId, attachmentId = attchment.Id })">Edit</a> / <a href="@Url.Action("Delete", "Attachments", new { attchment.Id, courseId = courseId })">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
