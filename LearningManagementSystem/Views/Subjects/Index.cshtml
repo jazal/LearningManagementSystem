@@ -18,10 +18,11 @@
             </tr>
         </thead>
         <tbody>
+            @{ var index = 1; }
             @foreach (var subject in Model)
             {
                 <tr>
-                    <th scope="row">#</th>
+                    <th scope="row">@(index++)</th>
                     <td>@subject.Title</td>
                     <td>@subject.Semester.ToString()</td>
                     <td>@subject.CourseTitle</td>
