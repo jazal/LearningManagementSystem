@@ -92,7 +92,15 @@ namespace LearningManagementSystem.Repositories.Students
 
         public StudentDto GetById(int id)
         {
-            var student = _context.Students.FirstOrDefault(ss => ss.Id == id);
+            var student = _context.Students.Include(s => s.Course).FirstOrDefault(s => s.Id == id);
+            return _mapper.Map<Student, StudentDto>(student);
+        }
+
+        public StudentDto GetStudentByCurrentUserId(string currentUserId)
+        {
+            var student = _context.Students
+                .Include(s => s.Course)
+                .FirstOrDefault(s => s.ApplicationUserId == currentUserId);
             return _mapper.Map<Student, StudentDto>(student);
         }
     }

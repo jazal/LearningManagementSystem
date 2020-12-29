@@ -1,4 +1,5 @@
 ﻿using LearningManagementSystem.Models.Enums;
+using LearningManagementSystem.Repositories.Employees.Dtos;
 using LearningManagementSystem.Repositories.Subjects.Dtos;
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -25,6 +26,8 @@ namespace LearningManagementSystem.Repositories.Attachments.Dtos
 
         [Required]
         public int EmployeeId { get; set; } // Course Coordinator
+
+        public EmployeeDto Employee { get; set; }
 
         [Required]
         public AttachmentStatus Status { get; set; }

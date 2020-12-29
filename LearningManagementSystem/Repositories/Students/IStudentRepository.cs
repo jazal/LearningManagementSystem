@@ -14,5 +14,7 @@ namespace LearningManagementSystem.Repositories.Students
         bool Delete(int id);
 
         StudentDto Edit(int id, StudentDto subject);
+
+        StudentDto GetStudentByCurrentUserId(string currentUserId);
     }
 }

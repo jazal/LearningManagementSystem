@@ -37,6 +37,8 @@ namespace LearningManagementSystem.Repositories.Students.Dtos
         [Required]
         public int CourseId { get; set; }
 
+        public CourseDto Course { get; set; }
+
         public DateTime EnrolledDate { get; set; }
     }
 }

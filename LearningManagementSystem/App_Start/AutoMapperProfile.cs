@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using LearningManagementSystem.Models;
+using LearningManagementSystem.Repositories.ApplicationUsers.Dtos;
+using LearningManagementSystem.Repositories.AssignmentSubmissions.Dtos;
 using LearningManagementSystem.Repositories.Attachments.Dtos;
 using LearningManagementSystem.Repositories.Courses;
 using LearningManagementSystem.Repositories.Employees.Dtos;
@@ -42,6 +44,17 @@ namespace LearningManagementSystem.App_Start
             
             CreateMap<AttachmentDto, Attachment>();
 
+            // Application Users
+            CreateMap<ApplicationUser, UserDto>();
+            
+            CreateMap<UserDto, ApplicationUser>();
+
+            // Attachment Submission
+            CreateMap<CreateAssignmentSubmissionDto, AssignmentSubmission> ();
+
+            CreateMap<AssignmentSubmission, AssignmentSubmissionDto>();
+
+            CreateMap<AssignmentSubmissionDto, AssignmentSubmission>();
         }
     }
 }

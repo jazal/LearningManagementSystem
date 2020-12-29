@@ -16,5 +16,7 @@ namespace LearningManagementSystem.Repositories.Attachments
         AttachmentDto Edit(int id, AttachmentDto updateInputs);
 
         List<AttachmentDto> GetAllByEmployeeId(int employeeId); // Course Coordinator
+
+        List<AttachmentDto> GetBySubjectId(int id);
     }
 }

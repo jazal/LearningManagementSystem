@@ -56,8 +56,7 @@ namespace LearningManagementSystem.Controllers
 
         public ActionResult Edit(int id)
         {
-            var subject = _repository.GetById(id);
-            var subjectDto = _mapper.Map<Subject, SubjectDto>(subject);
+            var subjectDto = _repository.GetById(id);
             return View(subjectDto);
         }
 

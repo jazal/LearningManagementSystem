@@ -1,5 +1,7 @@
 ﻿using LearningManagementSystem.Models.Enums;
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace LearningManagementSystem.Models
@@ -49,6 +51,13 @@ namespace LearningManagementSystem.Models
         public string ApplicationUserId { get; set; }
 
         public ApplicationUser ApplicationUser { get; set; }
+
+        public ICollection<AssignmentSubmission> AssignmentSubmissions { get; set; }
+
+        public Student()
+        {
+            AssignmentSubmissions = new Collection<AssignmentSubmission>();
+        }
 
     }
 }

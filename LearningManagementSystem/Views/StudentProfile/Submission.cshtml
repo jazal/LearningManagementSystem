@@ -1,0 +1,144 @@
+﻿@using LearningManagementSystem.Models.Enums
+@model LearningManagementSystem.ViewModels.ViewAttachmentsForStudentVM
+@{
+    ViewBag.Title = "Submission";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    a {
+        color: #3498db;
+    }
+
+        a:hover {
+            text-decoration: none;
+            color: #2980b9;
+        }
+
+    .active {
+        background-color: #ecf0f1;
+    }
+
+    .table > thead > tr > th {
+        border-bottom: 1px solid #95a5a6;
+    }
+
+    .table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
+        border-top: 1px solid #ecf0f1;
+    }
+
+    h3 {
+        text-align: center;
+        margin-top: 10px;
+        margin-bottom: 20px;
+    }
+</style>
+
+<br />
+<div class="container">
+    <div class="row">
+        <div class="panel panel-default">
+            <h3>@Model.Student.FirstName @Model.Student.LastName</h3>
+            <table class="table table-hover table-bordered">
+                <thead></thead>
+                <tbody>
+                    <tr>
+                        <td><b>Course</b></td>
+                        <td>@Model.Student.Course.Title</td>
+                    </tr>
+                    <tr>
+                        <td><b>Subject</b></td>
+                        <td>@Model.Subject.Title</td>
+                    </tr>
+                    <tr>
+                        <td><b>Semester</b></td>
+                        <td>@Model.Subject.Semester.ToString()</td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="panel panel-default">
+            <h3>Attachmments of @Model.Student.Course.Title</h3>
+            <table class="table table-hover table-bordered" id="assignment-submission-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Title</th>
+                        <th>Type</th>
+                        <th>Due Date</th>
+                        <th>Submit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var attachment in Model.Attachments)
+                    {
+                        <tr>
+                            <td>1</td>
+                            <td>@attachment.Title</td>
+                            <td>@attachment.AttachmentType @(attachment.Status == AttachmentStatus.Expired ? " - Expired" : "" )</td>
+                            <td>@attachment.DueDate</td>
+                            <td>
+                                @if (attachment.AttachmentType == AttachmentType.Assignment)
+                                {
+                                    <input type="file" name="newFile" id="newFile">
+                                    <a href="#" class="btn btn-sm btn-default assignment-submission" 
+                                       data-attachment-id = "@attachment.Id"
+                                       data-student-id = "@Model.Student.Id"
+                                       >Submit</a>
+                                } else
+                                {
+                                    <p>For Reference</p>     
+                                }
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    window.onload = function () {
+        if (window.jQuery) {
+
+            $("#assignment-submission-table").on('click', '.assignment-submission', function () {
+                var attachmentId = $(this).attr("data-attachment-id");
+                var studentId = $(this).attr('data-student-id');
+
+                if ($("#newFile").get(0).files.length !== 0) {
+                    var formData = new FormData();
+                    var files = $('#newFile')[0].files[0];
+
+                    formData.append('newFile', files);
+                    formData.append('studentId', parseInt(studentId));
+                    formData.append('attachmentId', parseInt(attachmentId));
+                    console.log(attachmentId, studentId);
+
+                    $.ajax({
+                        type: "POST",
+                        url: "/StudentProfile/UploadFile",
+                        data: formData,
+                        contentType: false,
+                        processData: false
+                    });
+                } else {
+                    alert("Select a file to proceed!");
+                }
+            });
+
+            
+
+            
+            
+
+        } else {
+            alert("jQuery is not loaded");
+        }
+    }
+    
+
+</script>

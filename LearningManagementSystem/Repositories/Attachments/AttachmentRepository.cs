@@ -4,6 +4,7 @@ using LearningManagementSystem.Repositories.Attachments.Dtos;
 using System.Collections.Generic;
 using System.Linq;
 using System.Data.Entity;
+using LearningManagementSystem.Models.Enums;
 
 namespace LearningManagementSystem.Repositories.Attachments
 {
@@ -72,8 +73,16 @@ namespace LearningManagementSystem.Repositories.Attachments
 
         public AttachmentDto GetById(int id)
         {
-            var attachment = _context.Attachments.FirstOrDefault(a => a.Id == id);
+            var attachment = _context.Attachments.Include(a => a.Employee).FirstOrDefault(a => a.Id == id);
             return _mapper.Map<Attachment, AttachmentDto>(attachment);
+        }
+
+        public List<AttachmentDto> GetBySubjectId(int id)
+        {
+            var attachments = _context.Attachments.Include(a => a.Employee)
+                .Where(a => a.SubjectId == id && a.Status != AttachmentStatus.Deleted)
+                .ToList();
+            return _mapper.Map<List<Attachment>, List<AttachmentDto>>(attachments);
         }
     }
 }

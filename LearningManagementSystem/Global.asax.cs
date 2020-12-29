@@ -2,6 +2,8 @@ using Autofac;
 using Autofac.Integration.Mvc;
 using LearningManagementSystem.App_Start;
 using LearningManagementSystem.Models;
+using LearningManagementSystem.Repositories.ApplicationUsers;
+using LearningManagementSystem.Repositories.AssignmentSubmissions;
 using LearningManagementSystem.Repositories.Attachments;
 using LearningManagementSystem.Repositories.Courses;
 using LearningManagementSystem.Repositories.Employees;
@@ -36,6 +38,8 @@ namespace LearningManagementSystem
             builder.RegisterType<StudentRepository>().AsImplementedInterfaces();
             builder.RegisterType<EmployeeRepository>().AsImplementedInterfaces();
             builder.RegisterType<AttachmentRepository>().AsImplementedInterfaces();
+            builder.RegisterType<ApplicationUserRepository>().AsImplementedInterfaces();
+            builder.RegisterType<AssignmentSubmissionRepository>().AsImplementedInterfaces();
 
             // OPTIONAL: Register model binders that require DI.
             builder.RegisterModelBinders(typeof(MvcApplication).Assembly);

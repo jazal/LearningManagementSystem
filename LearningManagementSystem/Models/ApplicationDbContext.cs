@@ -14,6 +14,8 @@ namespace LearningManagementSystem.Models
         public DbSet<Employee> Employees { get; set; }
         
         public DbSet<Attachment> Attachments { get; set; }
+        
+        public DbSet<AssignmentSubmission> AssignmentSubmissions { get; set; }
 
         public ApplicationDbContext()
             : base("Default", throwIfV1Schema: false)
@@ -23,6 +25,17 @@ namespace LearningManagementSystem.Models
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
+        }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            //modelBuilder.Entity<AssignmentSubmission>()
+            //    .HasRequired(s => s.Student)
+            //    .WithMany()
+            //    .WillCascadeOnDelete(false);
+            
         }
     }
 }

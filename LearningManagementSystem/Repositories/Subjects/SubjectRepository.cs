@@ -56,9 +56,10 @@ namespace LearningManagementSystem.Repositories.Subjects
             return _context.Subjects.Include(s => s.Course).ToList();
         }
 
-        public Subject GetById(int id)
+        public SubjectDto GetById(int id)
         {
-            return _context.Subjects.Include(s => s.Course).FirstOrDefault(c => c.Id == id);
+            var student = _context.Subjects.Include(s => s.Course).FirstOrDefault(c => c.Id == id);
+            return _mapper.Map<Subject, SubjectDto>(student);
         }
 
         public List<SubjectDto> GetSubjectsByCourseId(int courseId)

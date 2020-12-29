@@ -10,7 +10,7 @@ namespace LearningManagementSystem.Repositories.Subjects
 
         List<Subject> GetAll();
 
-        Subject GetById(int id);
+        SubjectDto GetById(int id);
 
         bool Delete(int id);
 
