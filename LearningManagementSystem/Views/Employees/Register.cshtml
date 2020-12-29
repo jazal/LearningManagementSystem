@@ -81,7 +81,7 @@
         </div>
     </div>
 
-    
+
     <div class="form-group" id="divCourses">
         <div class="col-md-offset-2 col-md-10">
             <p class="text-primary"><strong class="text-danger">*</strong> Course is required when you select <strong>Course Coordinator</strong> as a <strong>Designation</strong></p>
@@ -89,6 +89,18 @@
         <label for="Courses" class="col-md-2 control-label">Course</label>
         <div class="col-md-10">
             <select class="form-control" name="CourseId" id="Courses">
+                <option value=""></option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group" id="divSubjects">
+        <div class="col-md-offset-2 col-md-10">
+            <p class="text-primary"><strong class="text-danger">*</strong> Subject is required when you select <strong>Lecturer</strong> as a <strong>Designation</strong></p>
+        </div>
+        <label for="Subjects" class="col-md-2 control-label">Subjects</label>
+        <div class="col-md-10">
+            <select class="form-control" name="SubjectId" id="Subjects">
                 <option value=""></option>
             </select>
         </div>
@@ -109,6 +121,7 @@
     window.onload = function () {
         if (window.jQuery) {
 
+            // ---------------------------------- Course --------------------------------------------
             var ddlCourses = $('#Courses');
             ddlCourses.empty();
             $.ajax({
@@ -128,17 +141,51 @@
                 }
             });
 
-
             var divCourses = $('#divCourses');
             divCourses.hide();
             $('#Designation').on('change', function () {
-                // When you select CourseCoordinator as a designation => 2 
+                // When you select CourseCoordinator as a designation => 2
                 if ($('#Designation').val() == "2") {
                     $('#Courses').prop('required', true);
                     divCourses.show();
                 } else {
                     $('#Courses').prop('required', false);
                     divCourses.hide();
+                }
+            });
+
+
+            // ---------------------------------- Subjects ------------------------------------------
+            var ddlSubjects = $('#Subjects');
+            ddlSubjects.empty();
+            $.ajax({
+                type: "GET",
+                url: "/Employees/GetAllSubjects",
+                data: {},
+                contentType: "application/json",
+                dataType: "json",
+                success: function (response) {
+                    console.log(response);
+                    ddlSubjects.append('<option value=""></option>');
+                    $.each(response.subjectDtos, function (i, item) {
+                        ddlSubjects.append('<option value="' + item.Id + '">' + item.Title + '</option>');
+                    });
+                },
+                error: function (xhr, status, error) {
+                    alert("Result: " + status + " " + error + " " + xhr.status + " " + xhr.statusText)
+                }
+            });
+
+            var divSubjects = $('#divSubjects');
+            divSubjects.hide();
+            $('#Designation').on('change', function () {
+                // When you select CourseCoordinator as a designation => 2
+                if ($('#Designation').val() == "1") {
+                    $('#Subjects').prop('required', true);
+                    divSubjects.show();
+                } else {
+                    $('#Subjects').prop('required', false);
+                    divSubjects.hide();
                 }
             });
 

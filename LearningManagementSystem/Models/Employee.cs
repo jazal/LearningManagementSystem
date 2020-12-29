@@ -45,5 +45,10 @@ namespace LearningManagementSystem.Models
         public string ApplicationUserId { get; set; }
 
         public ApplicationUser ApplicationUser { get; set; }
+
+        public int? SubjectId { get; set; }
+
+        public Subject Subject { get; set; }
+
     }
 }

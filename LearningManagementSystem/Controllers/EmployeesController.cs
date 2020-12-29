@@ -3,6 +3,8 @@ using LearningManagementSystem.Models;
 using LearningManagementSystem.Repositories.Courses;
 using LearningManagementSystem.Repositories.Employees;
 using LearningManagementSystem.Repositories.Employees.Dtos;
+using LearningManagementSystem.Repositories.Subjects;
+using LearningManagementSystem.Repositories.Subjects.Dtos;
 using System.Collections.Generic;
 using System.Web.Mvc;
 
@@ -13,12 +15,14 @@ namespace LearningManagementSystem.Controllers
         private readonly IEmployeeRepository _repository;
         private readonly ICourseRepository _courseRepository;
         private readonly IMapper _mapper;
+        private readonly ISubjectRepository _subjectRepository;
 
-        public EmployeesController(IEmployeeRepository repository, ICourseRepository courseRepository, IMapper mapper)
+        public EmployeesController(IEmployeeRepository repository, ICourseRepository courseRepository, IMapper mapper, ISubjectRepository subjectRepository)
         {
             _repository = repository;
             _courseRepository = courseRepository;
             _mapper = mapper;
+            _subjectRepository = subjectRepository;
         }
 
         public ActionResult Index()
@@ -71,6 +75,14 @@ namespace LearningManagementSystem.Controllers
             var courseDtos = _mapper.Map<List<Course>, List<CourseDto>>(courses);
 
             return Json(new { courseDtos }, JsonRequestBehavior.AllowGet);
+        }
+        
+        public JsonResult GetAllSubjects()
+        {
+            var subjects = _subjectRepository.GetAll();
+            var subjectDtos = _mapper.Map<List<Subject>, List<SubjectDto>>(subjects);
+
+            return Json(new { subjectDtos }, JsonRequestBehavior.AllowGet);
         }
 
     }

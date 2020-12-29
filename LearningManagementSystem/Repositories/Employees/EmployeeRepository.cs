@@ -26,13 +26,23 @@ namespace LearningManagementSystem.Repositories.Employees
             var employee = _mapper.Map<CreateEmployeeDto, Employee>(input);
             
             // Only Course Coordinator has the permission to have 1 CourseId
-            if(employee.Designation == Designation.CourseCoordinator)
+            if(input.Designation == Designation.CourseCoordinator)
             {
                 employee.CourseId = employee.CourseId;
             }
             else
             {
                 employee.CourseId = null;
+            }
+
+            // Lecturer can have the subject
+            if (input.Designation == Designation.Lecturer)
+            {
+                employee.SubjectId = employee.SubjectId;
+            }
+            else
+            {
+                employee.SubjectId = null;
             }
 
             employee.ApplicationUser = new ApplicationUser
@@ -80,6 +90,16 @@ namespace LearningManagementSystem.Repositories.Employees
                     updatedValues.CourseId = null;
                 }
 
+                // Lecturer can have the subject
+                if (updatedValues.Designation == Designation.Lecturer)
+                {
+                    updatedValues.SubjectId = updatedValues.SubjectId;
+                }
+                else
+                {
+                    updatedValues.SubjectId = null;
+                }
+
                 existingEmployee.FirstName = updatedValues.FirstName;
                 existingEmployee.LastName = updatedValues.LastName;
                 existingEmployee.DateOfBirth = updatedValues.DateOfBirth;
@@ -89,6 +109,7 @@ namespace LearningManagementSystem.Repositories.Employees
                 existingEmployee.Email = updatedValues.Email;
                 existingEmployee.Password = updatedValues.Password;
                 existingEmployee.CourseId = updatedValues.CourseId;
+                existingEmployee.SubjectId = updatedValues.SubjectId;
 
                 var existingUser = existingEmployee.ApplicationUser;
                 existingUser.UserName = updatedValues.Email;

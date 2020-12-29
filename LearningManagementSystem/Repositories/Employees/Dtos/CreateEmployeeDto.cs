@@ -33,5 +33,7 @@ namespace LearningManagementSystem.Repositories.Employees.Dtos
         public string Password { get; set; }
 
         public int? CourseId { get; set; } // Only applicable for Designation = CourseCoordinator
+        
+        public int? SubjectId { get; set; } // Only applicable for Designation = Lecturer
     }
 }

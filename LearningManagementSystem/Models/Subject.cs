@@ -1,4 +1,6 @@
 ﻿using LearningManagementSystem.Models.Enums;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace LearningManagementSystem.Models
@@ -19,6 +21,13 @@ namespace LearningManagementSystem.Models
         public int CourseId { get; set; }
 
         public Course Course { get; set; }
+
+        public ICollection<Employee> Employees { get; set; } // Lecturer only
+
+        public Subject()
+        {
+            Employees = new Collection<Employee>();
+        }
 
     }
 }

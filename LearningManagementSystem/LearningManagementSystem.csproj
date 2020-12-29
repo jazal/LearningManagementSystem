@@ -262,6 +262,10 @@
     <Compile Include="Migrations\202012290513399_AddAssignmentSubmissionModelRemodeling.Designer.cs">
       <DependentUpon>202012290513399_AddAssignmentSubmissionModelRemodeling.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202012290542404_AddsubjectIdToEmployeeModel.cs" />
+    <Compile Include="Migrations\202012290542404_AddsubjectIdToEmployeeModel.Designer.cs">
+      <DependentUpon>202012290542404_AddsubjectIdToEmployeeModel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
@@ -430,6 +434,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202012290513399_AddAssignmentSubmissionModelRemodeling.resx">
       <DependentUpon>202012290513399_AddAssignmentSubmissionModelRemodeling.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202012290542404_AddsubjectIdToEmployeeModel.resx">
+      <DependentUpon>202012290542404_AddsubjectIdToEmployeeModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
