@@ -67,6 +67,7 @@
                         <th>Title</th>
                         <th>Type</th>
                         <th>Due Date</th>
+                        <th>Action</th>
                         <th>Submit</th>
                     </tr>
                 </thead>
@@ -82,16 +83,24 @@
                                 @if (attachment.AttachmentType == AttachmentType.Assignment)
                                 {
                                     <input type="file" name="newFile" id="newFile">
-                                    <a href="#" class="btn btn-sm btn-default assignment-submission" 
-                                       data-attachment-id = "@attachment.Id"
-                                       data-student-id = "@Model.Student.Id"
-                                       data-subject-id = "@attachment.SubjectId"
-                                       >Submit</a>
                                 } else
                                 {
                                     <p>For Reference</p>     
                                 }
                             </td>
+                            <td>
+                                @if (attachment.AttachmentType == AttachmentType.Assignment)
+                                {
+                                    <a href="#" class="btn btn-sm btn-primary assignment-submission"
+                                       data-attachment-id="@attachment.Id"
+                                       data-student-id="@Model.Student.Id"
+                                       data-subject-id="@attachment.SubjectId">Submit</a>
+                                }
+                                else
+                                {
+                                    <p>N/A</p>
+                                }
+                            </td>  
                         </tr>
                     }
 
