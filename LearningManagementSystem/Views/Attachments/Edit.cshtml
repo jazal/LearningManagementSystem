@@ -9,7 +9,7 @@
 @using (Html.BeginForm("Edit", "Attachments", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
-    <h4>Edit attachment.</h4>
+    <h4>Edit attachment</h4>
     <hr />
     @Html.ValidationSummary("", new { @class = "text-danger" })
     <input type="hidden" name="Id" id="Id" value="@Model.Id" />
@@ -83,7 +83,8 @@
             <input type="file" class="form-control" name="newFile" id="newFile">
         </div>
         <div class="col-md-offset-2 col-md-10" style="padding-top: 10px;">
-            <p class="text-info">@Model.AttachmentFileName</p>    
+            <p class="text-info">@Model.AttachmentFileName</p>
+            <td>@Html.ActionLink("Download Here", "DownloadAssignment", "Attachments", new { fileName = Model.AttachmentFileName }, new { @target = "_blank" })</td>
         </div>
     </div>
 

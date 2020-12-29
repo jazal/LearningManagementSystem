@@ -32,7 +32,7 @@
                     <td>@employee.Designation.ToString()</td>
                     <td>@employee.Email</td>
                     <td>
-                        @if (employee.Designation == Designation.CourseCoordinator || employee.Designation == Designation.Lecturer)
+                        @if (employee.Designation == Designation.CourseCoordinator)
                         {
                             <a href="@Url.Action("Index", "Attachments", new { employeeId = employee.Id, courseId = employee.CourseId })">Attachments</a>
                         }

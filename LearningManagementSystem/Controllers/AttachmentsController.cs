@@ -29,7 +29,7 @@ namespace LearningManagementSystem.Controllers
             return View(attachmentDtos);
         }
 
-        public ActionResult Register(int employeeId, int courseId)
+        public ActionResult Register(int employeeId)
         {
             var attachmentDtos = _repository.GetAllByEmployeeId(employeeId);
             return View();
@@ -104,6 +104,17 @@ namespace LearningManagementSystem.Controllers
 
             var updatedSubject = _repository.Edit(input.Id, input);
             return RedirectToAction("Index", "Attachments", new { employeeId = input.EmployeeId, courseId = courseId });
+        }
+
+        public void DownloadAssignment(string fileName)
+        {
+            var fileExtension = fileName.Split('.')[1].Trim();
+
+            Response.Clear();
+            Response.ContentType = "application/" + fileExtension;
+            Response.AppendHeader("Content-Disposition", String.Format("{0}; filename={0}", fileName));
+            Response.TransmitFile(string.Format(@"C:\Attachments\{0}", fileName));
+            Response.End();
         }
     }
 }
