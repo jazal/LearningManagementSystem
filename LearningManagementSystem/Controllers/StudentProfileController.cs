@@ -90,5 +90,16 @@ namespace LearningManagementSystem.Controllers
             return View("Index", "Home");
         }
 
+        public void DownloadAssignment(string fileName)
+        {
+            var fileExtension = fileName.Split('.')[1].Trim();
+
+            Response.Clear();
+            Response.ContentType = "application/" + fileExtension;
+            Response.AppendHeader("Content-Disposition", String.Format("{0}; filename={0}", fileName));
+            Response.TransmitFile(string.Format(@"C:\Attachments\{0}", fileName));
+            Response.End();
+        }
+
     }
 }
