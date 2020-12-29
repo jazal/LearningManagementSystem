@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using LearningManagementSystem.Models;
+using LearningManagementSystem.Models.Enums;
 using LearningManagementSystem.Repositories.Courses;
 using LearningManagementSystem.Repositories.Employees;
 using LearningManagementSystem.Repositories.Employees.Dtos;
@@ -83,6 +84,22 @@ namespace LearningManagementSystem.Controllers
             var subjectDtos = _mapper.Map<List<Subject>, List<SubjectDto>>(subjects);
 
             return Json(new { subjectDtos }, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult Corrections(int employeeid)
+        {
+            var employeeDto = _repository.GetById(employeeid);
+            
+            if(employeeDto.Designation == Designation.Lecturer)
+            {
+                if (employeeDto.SubjectId.HasValue)
+                {
+                    var subjectId = employeeDto.SubjectId.Value;
+                }
+            }
+
+
+            return null;
         }
 
     }

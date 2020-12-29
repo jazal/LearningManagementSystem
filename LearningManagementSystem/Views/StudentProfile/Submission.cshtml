@@ -85,6 +85,7 @@
                                     <a href="#" class="btn btn-sm btn-default assignment-submission" 
                                        data-attachment-id = "@attachment.Id"
                                        data-student-id = "@Model.Student.Id"
+                                       data-subject-id = "@attachment.SubjectId"
                                        >Submit</a>
                                 } else
                                 {
@@ -108,6 +109,7 @@
             $("#assignment-submission-table").on('click', '.assignment-submission', function () {
                 var attachmentId = $(this).attr("data-attachment-id");
                 var studentId = $(this).attr('data-student-id');
+                var subjectId = $(this).attr('data-subject-id');
 
                 if ($("#newFile").get(0).files.length !== 0) {
                     var formData = new FormData();
@@ -116,7 +118,7 @@
                     formData.append('newFile', files);
                     formData.append('studentId', parseInt(studentId));
                     formData.append('attachmentId', parseInt(attachmentId));
-                    console.log(attachmentId, studentId);
+                    formData.append('subjectId', parseInt(subjectId));
 
                     $.ajax({
                         type: "POST",

@@ -19,6 +19,9 @@ namespace LearningManagementSystem.Models
         [Required]
         public int AttachmentId { get; set; }
 
+        [Required]
+        public int SubjectId { get; set; }
+
         public int? EmployeeId { get; set; }
 
         public DateTime CreatedDate { get; set; }

@@ -63,9 +63,9 @@ namespace LearningManagementSystem.Controllers
             });
         }
 
-        public ActionResult UploadFile(HttpPostedFileBase newFile, int studentId, int attachmentId)
+        public ActionResult UploadFile(HttpPostedFileBase newFile, int studentId, int attachmentId, int subjectId)
         {
-            var fileName = $"studentId_{studentId}_attachmentId_{attachmentId}_{DateTime.Now.ToString("ddMMyyyyhhmmsstt")}.{newFile.FileName.Split('.')[1].Trim()}";
+            var fileName = $"studentId_{studentId}_attachmentId_{attachmentId}_subjectId_{subjectId}_{DateTime.Now.ToString("ddMMyyyyhhmmsstt")}.{newFile.FileName.Split('.')[1].Trim()}";
 
             if (newFile != null && newFile.ContentLength > 0)
             {
@@ -82,6 +82,7 @@ namespace LearningManagementSystem.Controllers
             var created = _assignmentSubmissionRepository.Create(new CreateAssignmentSubmissionDto {
                 StudentId = studentId,
                 AttachmentId = attachmentId,
+                SubjectId = subjectId,
                 CreatedDate = DateTime.Now,
                 FileName = fileName,
             });
