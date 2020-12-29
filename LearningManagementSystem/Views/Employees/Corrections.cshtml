@@ -1,0 +1,105 @@
+﻿@model IEnumerable<LearningManagementSystem.Repositories.AssignmentSubmissions.Dtos.AssignmentSubmissionDto>
+@{
+    ViewBag.Title = "Corrections";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<input type="hidden" name="EmployeeId" id="EmployeeId" value="@Request.QueryString["employeeId"]" />
+<h2 class="text-center">Assignments</h2>
+<div class="table-responsive">
+    <table class="table" id="assignment-submission-table">
+        <thead class="alert-info">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Student</th>
+                <th scope="col">Submitted File</th>
+                <th scope="col">Assign Grade</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var assignments in Model)
+            {
+                <tr>
+                    <th scope="row"></th>
+                    <td>@assignments.Student.FirstName @assignments.Student.LastName</td>
+                    <td>@Html.ActionLink("Download Here", "DownloadAssignment", "Employees", new { fileName = assignments.FileName }, new { @target = "_blank" })</td>
+                    <td>
+                        @if (assignments.Grade.HasValue)
+                        {
+                            @assignments.Grade.Value;
+                        }
+                        else
+                        {
+                            <input type="number" class="form-control" min="10" max="100" name="Grade" id="Grade" value="" />
+                        }
+                    </td>
+                    <td>
+                        @if (assignments.Grade.HasValue)
+                        {
+                            <p>Grade has been updated</p>
+                        }
+                        else
+                        {
+                            <a href="#" class="btn btn-sm btn-primary add-grade" data-assignment-id="@assignments.Id">Submit</a>    
+                        }
+                        
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<script>
+    window.onload = function () {
+        if (window.jQuery) {
+
+            $("#assignment-submission-table").on('click', '.add-grade', function () {
+                var attachmentId = $(this).attr("data-assignment-id");
+                attachmentId = parseInt(attachmentId);
+
+                var employeeId = $('#EmployeeId').val();
+                employeeId = parseInt(employeeId);
+
+                var grade = $(this).closest("tr").find("#Grade").val();
+                grade = parseFloat(grade);
+
+                if (grade) {
+                    $.ajax({
+                        type: "GET",
+                        url: "/Employees/AssignGrade",
+                        data: {
+                            assignmentSubmissionId: attachmentId,
+                            grade: grade,
+                            employeeId: employeeId
+                        },
+                        contentType: "application/json",
+                        dataType: "json",
+                        success: function (response) {
+                            if (response.updated) {
+                                alert("Success");
+                            }
+                        },
+                        error: function (e) {
+                            alert("Error");
+                        }
+                    });
+                } else {
+                    alert("Enter a valid number!");
+                }
+                
+
+            });
+
+
+
+
+
+
+        } else {
+            alert("jQuery is not loaded");
+        }
+    }
+
+
+</script>

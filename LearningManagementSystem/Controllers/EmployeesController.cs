@@ -1,11 +1,13 @@
 ﻿using AutoMapper;
 using LearningManagementSystem.Models;
 using LearningManagementSystem.Models.Enums;
+using LearningManagementSystem.Repositories.AssignmentSubmissions;
 using LearningManagementSystem.Repositories.Courses;
 using LearningManagementSystem.Repositories.Employees;
 using LearningManagementSystem.Repositories.Employees.Dtos;
 using LearningManagementSystem.Repositories.Subjects;
 using LearningManagementSystem.Repositories.Subjects.Dtos;
+using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
 
@@ -17,13 +19,19 @@ namespace LearningManagementSystem.Controllers
         private readonly ICourseRepository _courseRepository;
         private readonly IMapper _mapper;
         private readonly ISubjectRepository _subjectRepository;
+        private readonly IAssignmentSubmissionRepository _assignmentSubmissionRepository;
 
-        public EmployeesController(IEmployeeRepository repository, ICourseRepository courseRepository, IMapper mapper, ISubjectRepository subjectRepository)
+        public EmployeesController(IEmployeeRepository repository, 
+            ICourseRepository courseRepository, 
+            IMapper mapper, 
+            ISubjectRepository subjectRepository,
+            IAssignmentSubmissionRepository assignmentSubmissionRepository)
         {
             _repository = repository;
             _courseRepository = courseRepository;
             _mapper = mapper;
             _subjectRepository = subjectRepository;
+            _assignmentSubmissionRepository = assignmentSubmissionRepository;
         }
 
         public ActionResult Index()
@@ -95,12 +103,29 @@ namespace LearningManagementSystem.Controllers
                 if (employeeDto.SubjectId.HasValue)
                 {
                     var subjectId = employeeDto.SubjectId.Value;
+                    var assignments = _assignmentSubmissionRepository.GetAllBySubjectId(subjectId);
+                    return View(assignments);
                 }
             }
-
-
-            return null;
+            return Content("There is no subject allocated for you");
         }
 
+        public JsonResult AssignGrade(int assignmentSubmissionId, float grade, int employeeId)
+        {
+            var updated = _assignmentSubmissionRepository.UpdateGrade(assignmentSubmissionId, grade, employeeId);
+
+            return Json(new { updated }, JsonRequestBehavior.AllowGet);
+        }
+
+        public void DownloadAssignment(string fileName)
+        {
+            var fileExtension = fileName.Split('.')[1].Trim();
+
+            Response.Clear();
+            Response.ContentType = "application/" + fileExtension;
+            Response.AppendHeader("Content-Disposition", String.Format("{0}; filename={0}", fileName));
+            Response.TransmitFile(string.Format(@"C:\Attachments\Submissions\{0}", fileName));
+            Response.End();
+        }
     }
 }

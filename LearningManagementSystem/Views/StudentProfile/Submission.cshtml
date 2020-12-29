@@ -111,25 +111,66 @@
                 var studentId = $(this).attr('data-student-id');
                 var subjectId = $(this).attr('data-subject-id');
 
-                if ($("#newFile").get(0).files.length !== 0) {
+                var _file = $(this).closest("tr").find("#newFile");
+
+                if (_file.get(0).files.length !== 0) {
                     var formData = new FormData();
-                    var files = $('#newFile')[0].files[0];
+                    var files = _file[0].files[0];
 
-                    formData.append('newFile', files);
-                    formData.append('studentId', parseInt(studentId));
-                    formData.append('attachmentId', parseInt(attachmentId));
-                    formData.append('subjectId', parseInt(subjectId));
+                    myfile = _file.val();
+                    var ext = myfile.split('.').pop();
 
-                    $.ajax({
-                        type: "POST",
-                        url: "/StudentProfile/UploadFile",
-                        data: formData,
-                        contentType: false,
-                        processData: false
-                    });
+                    if (ext == "pdf" || ext == "docx" || ext == "doc") {
+                        alert("Yes");
+                        formData.append('newFile', files);
+                        formData.append('studentId', parseInt(studentId));
+                        formData.append('attachmentId', parseInt(attachmentId));
+                        formData.append('subjectId', parseInt(subjectId));
+
+                        $.ajax({
+                            type: "POST",
+                            url: "/StudentProfile/UploadFile",
+                            data: formData,
+                            contentType: false,
+                            processData: false
+                        });
+                    } else {
+                        alert("File format should be PDF, DOC or DOCX");
+                    }
                 } else {
                     alert("Select a file to proceed!");
                 }
+
+                //if ($("#newFile").get(0).files.length !== 0) {
+                //    var formData = new FormData();
+                //    var files = $('#newFile')[0].files[0];
+
+                //    formData.append('newFile', files);
+                //    formData.append('studentId', parseInt(studentId));
+                //    formData.append('attachmentId', parseInt(attachmentId));
+                //    formData.append('subjectId', parseInt(subjectId));
+
+                //    $.ajax({
+                //        type: "POST",
+                //        url: "/StudentProfile/UploadFile",
+                //        data: formData,
+                //        contentType: false,
+                //        processData: false
+                //    });
+                //} else {
+                //    alert("Select a file to proceed!");
+                //}
+
+                
+
+                //myfile = $('#newFile').val();
+                //var ext = myfile.split('.').pop();
+                //if (ext == "pdf" || ext == "docx" || ext == "doc") {
+                //    alert("Yes");
+                //} else {
+                //    alert("No");
+                //}
+
             });
 
             

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LearningManagementSystem.Repositories.Students.Dtos;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace LearningManagementSystem.Repositories.AssignmentSubmissions.Dtos
@@ -19,6 +20,8 @@ namespace LearningManagementSystem.Repositories.AssignmentSubmissions.Dtos
 
         [Required]
         public int SubjectId { get; set; }
+
+        public StudentDto Student { get; set; }
 
         public int? EmployeeId { get; set; }
 
