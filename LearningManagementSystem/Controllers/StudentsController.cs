@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using LearningManagementSystem.Models;
+using LearningManagementSystem.Repositories.AssignmentSubmissions;
 using LearningManagementSystem.Repositories.Courses;
 using LearningManagementSystem.Repositories.Students;
 using LearningManagementSystem.Repositories.Students.Dtos;
+using LearningManagementSystem.Repositories.Subjects;
 using System.Collections.Generic;
 using System.Web.Mvc;
 
@@ -13,12 +15,20 @@ namespace LearningManagementSystem.Controllers
         private readonly IStudentRepository _repository;
         private readonly ICourseRepository _courseRepository;
         private readonly IMapper _mapper;
+        private readonly ISubjectRepository _subjectRepository;
+        private readonly IAssignmentSubmissionRepository _assignmentSubmissionRepository;
 
-        public StudentsController(IStudentRepository repository, ICourseRepository courseRepository, IMapper mapper)
+        public StudentsController(IStudentRepository repository, 
+            ICourseRepository courseRepository, 
+            IMapper mapper, 
+            ISubjectRepository subjectRepository,
+            IAssignmentSubmissionRepository assignmentSubmissionRepository)
         {
             _repository = repository;
             _courseRepository = courseRepository;
             _mapper = mapper;
+            _subjectRepository = subjectRepository;
+            _assignmentSubmissionRepository = assignmentSubmissionRepository;
         }
         
         public ActionResult Index()
@@ -71,6 +81,27 @@ namespace LearningManagementSystem.Controllers
             var courseDtos = _mapper.Map<List<Course>, List<CourseDto>>(courses);
 
             return Json(new { courseDtos }, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetSubjectsByCourseId(int courseId)
+        {
+            var subjectDtos = _subjectRepository.GetSubjectsByCourseId(courseId);
+
+            return Json(new { subjectDtos }, JsonRequestBehavior.AllowGet);
+        }
+
+        [AllowAnonymous]
+        public ActionResult Results()
+        {
+            return View();
+        }
+
+        [AllowAnonymous]
+        public JsonResult GetResults(int subjectId)
+        {
+            var assignmentDtos = _assignmentSubmissionRepository.GetAllBySubjectId(subjectId);
+
+            return Json(new { assignmentDtos }, JsonRequestBehavior.AllowGet);
         }
 
     }

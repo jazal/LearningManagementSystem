@@ -389,6 +389,7 @@
     <Content Include="Views\StudentProfile\Index.cshtml" />
     <Content Include="Views\StudentProfile\Submission.cshtml" />
     <Content Include="Views\Employees\Corrections.cshtml" />
+    <Content Include="Views\Students\Results.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

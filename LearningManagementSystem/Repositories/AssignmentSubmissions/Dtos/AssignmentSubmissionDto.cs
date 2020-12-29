@@ -15,13 +15,13 @@ namespace LearningManagementSystem.Repositories.AssignmentSubmissions.Dtos
         [Required]
         public int StudentId { get; set; }
 
+        public StudentDto Student { get; set; }
+
         [Required]
         public int AttachmentId { get; set; }
 
         [Required]
         public int SubjectId { get; set; }
-
-        public StudentDto Student { get; set; }
 
         public int? EmployeeId { get; set; }
 

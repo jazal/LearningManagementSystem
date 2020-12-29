@@ -1,0 +1,139 @@
+﻿@using LearningManagementSystem.Models.Enums
+@{
+    ViewBag.Title = "Student results";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>@ViewBag.Title</h2>
+<hr />
+<form class="form-horizontal" role="form">
+    <div class="form-group">
+        <label for="Courses" class="col-md-2 control-label">Course</label>
+        <div class="col-md-10">
+            <select class="form-control" name="CourseId" id="Courses" required>
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="Subjects" class="col-md-2 control-label">Subject</label>
+        <div class="col-md-10">
+            <select class="form-control" name="SubjectId" id="Subjects" required>
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="button" class="btn btn-default" id="btnSearch" value="Search" />
+        </div>
+    </div>
+</form>
+<div class="row">
+    <div class="col-md-offset-2 col-md-6 ">
+        <div class="table-responsive">
+            <table id="result-table" class="table table-bordered table-hover">
+                <tr>
+                    <th>Student Name</th>
+                    <th>Grade</th>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<script type="text/javascript">
+    window.onload = function () {
+        if (window.jQuery) {
+
+            var ddlCourses = $('#Courses');
+            ddlCourses.empty();
+            $.ajax({
+                type: "GET",
+                url: "/Students/GetAllCourses",
+                data: {},
+                contentType: "application/json",
+                dataType: "json",
+                success: function (response) {
+                    ddlCourses.append('<option value=""></option>');
+                    $.each(response.courseDtos, function (i, item) {
+                        ddlCourses.append('<option value="' + item.Id + '">' + item.Title + '</option>');
+                    });
+                },
+                error: function (xhr, status, error) {
+                    alert("Result: " + status + " " + error + " " + xhr.status + " " + xhr.statusText)
+                }
+            });
+
+            // ---------------------------- Course Change => according to Subject (Cascade Drop Down List) ----------------------
+
+            var ddlSubjects = $('#Subjects');
+            ddlCourses.on('change', function (e) {
+                e.preventDefault();
+                courseId = parseInt($(this).val());
+                ddlSubjects.empty();
+                $.ajax({
+                    type: "GET",
+                    url: "/Students/GetSubjectsByCourseId",
+                    data: { courseId: courseId },
+                    contentType: "application/json",
+                    dataType: "json",
+                    success: function (response) {
+                        $.each(response.subjectDtos, function (i, item) {
+                            ddlSubjects.append('<option value="' + item.Id + '">' + item.Title + '</option>');
+                        });
+                    },
+                    error: function (xhr, status, error) {
+                        alert("Invalid Subject! Please reload the page");
+                    }
+                });
+            });
+
+            // ---------------------------- Getting the Results ----------------------
+
+
+            $('#btnSearch').click(function () {
+                if (ddlSubjects.val()) {
+                    $.ajax({
+                        type: "GET",
+                        url: "/Students/GetResults",
+                        data: { subjectId: ddlSubjects.val() },
+                        contentType: "application/json",
+                        dataType: "json",
+                        success: function (response) {
+                            // Make table empty
+                            $('#result-table tr:not(:first-child)').html("");
+
+                            var trHTML = '';
+
+                            if ((response.assignmentDtos == 0)) {
+                                alert('No results found!');
+                            } else {
+                                $.each(response.assignmentDtos, function (i, item) {
+                                    console.log(item);
+
+                                    var grade = item.Grade == null ? "Not corrected" :
+                                        item.Grade < parseFloat(59) ? "Pass" :
+                                            item.Grade < parseFloat(74) ? "Merit" : "Distinction";
+
+                                    trHTML += "<tr><td>" + item.Student.FirstName + " " + item.Student.FirstName + "</td><td>" + grade + "</td></td></tr>";
+                                });
+                                $('#result-table').append(trHTML);
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            alert("Invalid Subject! Please reload the page");
+                        }
+                    });
+                } else {
+                    alert("No subject selected");
+                }
+            });
+
+        } else {
+            alert("jQuery is not loaded");
+        }
+    }
+</script>
+
