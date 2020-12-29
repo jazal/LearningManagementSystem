@@ -5,40 +5,40 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>@ViewBag.Title.</h2>
+<h2>@ViewBag.Title</h2>
 
 @using (Html.BeginForm("Edit", "Students", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
-    <h4>Edit Student.</h4>
+    <h4>Edit student</h4>
     <hr />
     @Html.ValidationSummary("", new { @class = "text-danger" })
     <input type="hidden" name="Id" value="@Model.Id" />
     <input type="hidden" name="SelectedCourseId" id="SelectedCourseId" value="@Model.CourseId" />
 
     <div class="form-group">
-        <label for="FirstName" class="col-md-2 control-label">FirstName</label>
+        <label for="FirstName" class="col-md-2 control-label">First Name</label>
         <div class="col-md-10">
             <input type="text" name="FirstName" id="FirstName" value="@Model.FirstName" class="form-control" required />
         </div>
     </div>
 
     <div class="form-group">
-        <label for="LastName" class="col-md-2 control-label">LastName</label>
+        <label for="LastName" class="col-md-2 control-label">Last Name</label>
         <div class="col-md-10">
             <input type="text" name="LastName" id="LastName" value="@Model.LastName" class="form-control" required />
         </div>
     </div>
 
     <div class="form-group">
-        <label for="DateOfBirth" class="col-md-2 control-label">DateOfBirth</label>
+        <label for="DateOfBirth" class="col-md-2 control-label">Date of Birth</label>
         <div class="col-md-10">
             <input type="text" name="DateOfBirth" id="DateOfBirth" value="@Model.DateOfBirth" class="form-control" required />
         </div>
     </div>
 
     <div class="form-group">
-        <label for="ContactNo" class="col-md-2 control-label">ContactNo</label>
+        <label for="ContactNo" class="col-md-2 control-label">Contact No</label>
         <div class="col-md-10">
             <input type="text" name="ContactNo" id="ContactNo" value="@Model.ContactNo" class="form-control" required />
         </div>
@@ -94,7 +94,7 @@
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" class="btn btn-default" value="Update" />
+            <input type="submit" class="btn btn-warning" value="Update" />
         </div>
     </div>
 }

@@ -6,12 +6,14 @@
 
 <h2>@ViewBag.Title</h2>
 <a href="@Url.Action("Register", "Students")" class="btn btn-primary">Register</a>
+<hr />
 <div class="table-responsive">
     <table class="table">
         <thead class="thead-dark alert-info">
             <tr>
                 <th scope="row">#</th>
                 <th scope="col">Full Name</th>
+                <th scope="col">Course</th>
                 <th scope="col">Gender</th>
                 <th scope="col">ContactNo</th>
                 <th scope="col">Email</th>
@@ -19,11 +21,13 @@
             </tr>
         </thead>
         <tbody>
+            @{ var index = 1; }
             @foreach (var student in Model)
             {
                 <tr>
-                    <th scope="row"></th>
+                    <th scope="row">@(index++)</th>
                     <td>@string.Format("{0} {1}", student.FirstName, student.LastName)</td>
+                    <td>@student.Course.Title</td>
                     <td>@student.Gender.ToString()</td>
                     <td>@student.ContactNo</td>
                     <td>@student.Email</td>

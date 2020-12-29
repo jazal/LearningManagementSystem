@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web.Helpers;
+using System.Data.Entity;
 
 namespace LearningManagementSystem.Repositories.Students
 {
@@ -86,7 +87,7 @@ namespace LearningManagementSystem.Repositories.Students
 
         public List<StudentDto> GetAll()
         {
-            var students = _context.Students.ToList();
+            var students = _context.Students.Include(s => s.Course).ToList();
             return _mapper.Map<List<Student>, List<StudentDto>>(students);
         }
 
