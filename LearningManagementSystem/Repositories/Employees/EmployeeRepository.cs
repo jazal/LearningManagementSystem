@@ -47,6 +47,13 @@ namespace LearningManagementSystem.Repositories.Employees
                 employee.SubjectId = null;
             }
 
+            // Admin / General Manager
+            if (input.Designation == Designation.GeneralManager)
+            {
+                employee.SubjectId = null;
+                employee.CourseId = null;
+            }
+
             employee.ApplicationUser = new ApplicationUser
             {
                 UserName = input.Email,
@@ -55,7 +62,7 @@ namespace LearningManagementSystem.Repositories.Employees
                 SecurityStamp = Guid.NewGuid().ToString("D"),
                 LockoutEnabled = true,
                 IsStudent = false,
-                Designation = input.Designation
+                Designation = employee.Designation
             };
 
             var createdEmployee = _context.Employees.Add(employee);
@@ -102,6 +109,13 @@ namespace LearningManagementSystem.Repositories.Employees
                 else
                 {
                     updatedValues.SubjectId = null;
+                }
+
+                // admin / General Manager 
+                if (updatedValues.Designation == Designation.GeneralManager)
+                {
+                    updatedValues.SubjectId = null;
+                    updatedValues.CourseId = null;
                 }
 
                 existingEmployee.FirstName = updatedValues.FirstName;
