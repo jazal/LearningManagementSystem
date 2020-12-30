@@ -29,6 +29,7 @@ namespace LearningManagementSystem.Repositories.Employees
             if(input.Designation == Designation.CourseCoordinator)
             {
                 employee.CourseId = employee.CourseId;
+                employee.SubjectId = null;
             }
             else
             {
@@ -39,6 +40,7 @@ namespace LearningManagementSystem.Repositories.Employees
             if (input.Designation == Designation.Lecturer)
             {
                 employee.SubjectId = employee.SubjectId;
+                employee.CourseId = null;
             }
             else
             {
@@ -84,6 +86,7 @@ namespace LearningManagementSystem.Repositories.Employees
                 if (updatedValues.Designation == Designation.CourseCoordinator)
                 {
                     updatedValues.CourseId = updatedValues.CourseId;
+                    updatedValues.SubjectId = null;
                 }
                 else
                 {
@@ -94,6 +97,7 @@ namespace LearningManagementSystem.Repositories.Employees
                 if (updatedValues.Designation == Designation.Lecturer)
                 {
                     updatedValues.SubjectId = updatedValues.SubjectId;
+                    updatedValues.CourseId = null;
                 }
                 else
                 {
