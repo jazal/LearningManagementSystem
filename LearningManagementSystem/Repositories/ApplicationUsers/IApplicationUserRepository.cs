@@ -5,5 +5,7 @@ namespace LearningManagementSystem.Repositories.ApplicationUsers
     public interface IApplicationUserRepository
     {
         UserDto GetUserById(string id);
+
+        UserDto GetUserByEmailId(string email);
     }
 }

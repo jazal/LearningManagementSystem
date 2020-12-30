@@ -14,5 +14,7 @@ namespace LearningManagementSystem.Repositories.Employees
         bool Delete(int id);
 
         EmployeeDto Edit(int id, EmployeeDto subject);
+
+        EmployeeDto GetEmployeeByCurrentUserId(string applicationUserId);
     }
 }

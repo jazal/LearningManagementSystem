@@ -16,6 +16,12 @@ namespace LearningManagementSystem.Repositories.ApplicationUsers
             _mapper = mapper;
         }
 
+        public UserDto GetUserByEmailId(string email)
+        {
+            var user = _context.Users.FirstOrDefault(u => u.Email == email);
+            return _mapper.Map<ApplicationUser, UserDto>(user);
+        }
+
         public UserDto GetUserById(string id)
         {
             var user = _context.Users.FirstOrDefault(u => u.Id == id.Trim());

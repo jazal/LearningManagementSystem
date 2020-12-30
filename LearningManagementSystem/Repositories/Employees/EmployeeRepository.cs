@@ -138,8 +138,17 @@ namespace LearningManagementSystem.Repositories.Employees
 
         public EmployeeDto GetById(int id)
         {
-            var student = _context.Employees.Include(e => e.Course).FirstOrDefault(e => e.Id == id);
-            return _mapper.Map<Employee, EmployeeDto>(student);
+            var employee = _context.Employees.Include(e => e.Course).FirstOrDefault(e => e.Id == id);
+            return _mapper.Map<Employee, EmployeeDto>(employee);
+        }
+
+        public EmployeeDto GetEmployeeByCurrentUserId(string applicationUserId)
+        {
+            var employee = _context.Employees
+                .Include(e => e.Subject)
+                .Include(e => e.Course)
+                .FirstOrDefault(e => e.ApplicationUserId == applicationUserId);
+            return _mapper.Map<Employee, EmployeeDto>(employee);
         }
     }
 }

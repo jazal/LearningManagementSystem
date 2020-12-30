@@ -11,7 +11,5 @@ namespace LearningManagementSystem.Models.Enums
 
         [Display(Name = "General Manager")]
         GeneralManager = 3,
-
-        //Student = 4
     }
 }
