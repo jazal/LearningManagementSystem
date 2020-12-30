@@ -17,10 +17,11 @@
             </tr>
         </thead>
         <tbody>
+            @{ var index = 1; }
             @foreach (var assignments in Model)
             {
                 <tr>
-                    <th scope="row"></th>
+                    <th scope="row">@(index++)</th>
                     <td>@assignments.Student.FirstName @assignments.Student.LastName</td>
                     <td>@Html.ActionLink("Download Here", "DownloadAssignment", "Employees", new { fileName = assignments.FileName }, new { @target = "_blank" })</td>
                     <td>
