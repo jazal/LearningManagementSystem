@@ -1,7 +1,4 @@
-﻿using System;
-using System.Globalization;
-using System.Linq;
-using System.Security.Claims;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -9,6 +6,9 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using LearningManagementSystem.Models;
+using LearningManagementSystem.Repositories.ApplicationUsers;
+using LearningManagementSystem.Repositories.Students;
+using LearningManagementSystem.Repositories.Employees;
 
 namespace LearningManagementSystem.Controllers
 {
@@ -17,9 +17,17 @@ namespace LearningManagementSystem.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private readonly IApplicationUserRepository _userRepository;
+        private readonly IStudentRepository _studentRepository;
+        private readonly IEmployeeRepository _employeeRepository;
 
-        public AccountController()
+        public AccountController(IApplicationUserRepository userRepository, 
+            IStudentRepository studentRepository,
+            IEmployeeRepository employeeRepository)
         {
+            _userRepository = userRepository;
+            _studentRepository = studentRepository;
+            _employeeRepository = employeeRepository;
         }
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
@@ -79,6 +87,27 @@ namespace LearningManagementSystem.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
+                    var user = _userRepository.GetUserByEmailId(model.Email);
+                    if (user != null)
+                    {
+                        if(user.IsStudent)
+                        {
+                            var student = _studentRepository.GetStudentByCurrentUserId(user.Id);
+                            Session["isStudent"] = true;
+                            Session["isEmployee"] = false;
+                            Session["studentId"] = student.Id;
+                        }
+                        else
+                        {
+                            var employee = _employeeRepository.GetEmployeeByCurrentUserId(user.Id);
+                            Session["isStudent"] = false;
+                            Session["isEmployee"] = true;
+                            Session["employeeId"] = employee.Id;
+                            Session["designation"] = employee.Designation.ToString();
+                            Session["LecturerSubjectId"] = employee.SubjectId.GetValueOrDefault();
+                            Session["CourseCoordinatorCourseId"] = employee.CourseId.GetValueOrDefault();
+                        }
+                    }
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
@@ -391,6 +420,8 @@ namespace LearningManagementSystem.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
+            Session.Clear();
+            Session.Contents.RemoveAll();
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             return RedirectToAction("Index", "Home");
         }
@@ -426,7 +457,7 @@ namespace LearningManagementSystem.Controllers
         #region Helpers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
-
+        
         private IAuthenticationManager AuthenticationManager
         {
             get

@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using LearningManagementSystem.Models.Enums
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -20,11 +21,51 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Courses", "Index", "Courses")</li>
-                    <li>@Html.ActionLink("Subjects", "Index", "Subjects")</li>
-                    <li>@Html.ActionLink("Students", "Index", "Students")</li>
-                    <li>@Html.ActionLink("Employees", "Index", "Employees")</li>
-                    <li>@Html.ActionLink("Student Profile", "Index", "StudentProfile")</li>
+                    @if (Session["isEmployee"] != null)
+                    {
+                        if ((bool)Session["isEmployee"])
+                        {
+                            if (Session["designation"].ToString() == Designation.GeneralManager.ToString())
+                            {
+                                <li>@Html.ActionLink("Courses", "Index", "Courses")</li>
+                                <li>@Html.ActionLink("Subjects", "Index", "Subjects")</li>
+                                <li>@Html.ActionLink("Students", "Index", "Students")</li>
+                                <li>@Html.ActionLink("Employees", "Index", "Employees")</li>
+                            }
+
+                            if (Session["designation"].ToString() == Designation.CourseCoordinator.ToString())
+                            {
+                                var employeeId = Session["employeeId"].ToString();
+
+                                var courseCoordinatorCourseId = Session["CourseCoordinatorCourseId"].ToString();
+
+                                <li>@Html.ActionLink("Subjects", "Index", "Subjects")</li>
+                                <li>@Html.ActionLink("Students", "Index", "Students")</li>
+                                <li><a href="@Url.Action("Index", "Attachments", new { employeeId = employeeId, courseId = courseCoordinatorCourseId })">Attachment Uploading Panel</a></li>
+                            }
+
+                            if (Session["designation"].ToString() == Designation.Lecturer.ToString())
+                            {
+                                var employeeId = Session["employeeId"].ToString();
+                                var _employeeId = Convert.ToInt16(employeeId);
+
+
+                                var lectureSubjectId = Session["LecturerSubjectId"].ToString();
+                                var _lectureSubjectId = Convert.ToInt16(lectureSubjectId);
+
+                                <li><a href="@Url.Action("Corrections", "Employees", new { employeeId = employeeId })">Assignments to Correct</a></li>
+                            }
+                        }
+                    }
+
+                    @if (Session["isStudent"] != null)
+                    {
+                        if ((bool)Session["isStudent"])
+                        {
+                            <li>@Html.ActionLink("Student Profile", "Index", "StudentProfile")</li>
+                        }
+                    }
+
                     <li>@Html.ActionLink("Results", "Results", "Students")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
